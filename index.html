@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mak Nari - Mari Kenali Nama-nama Hari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Baloo 2', cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('picture/bg.gif'); /* Background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Halaman Awal */
+        .intro-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            z-index: 9999;
+        }
+
+        .intro-blackboard {
+            background-color: rgba(60, 110, 113, 0.9); /* Papan tulis */
+            border: 5px solid white;
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .start-btn {
+            padding: 15px 30px;
+            background-color: #ffbc42;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            animation: bounceIn 2s ease-in-out;
+        }
+
+        .start-btn:hover {
+            background-color: #ff9505;
+        }
+
+        @keyframes bounceIn {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Styling Papan Tulis */
+        .blackboard {
+            background-color: rgba(60, 110, 113, 0.9); /* Papan tulis */
+            border: 5px solid white;
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+            display: none;
+            position: relative; /* Tambahkan relative untuk animasi di dalam */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .header {
+            text-align: center;
+            padding: 5px;
+        }
+
+        .header img {
+            width: 100px; /* Ukuran logo disamakan */
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            margin: 5px 0 20px 0;
+        }
+
+        /* Menu Vertikal */
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .menu-container a {
+            background-color: #ffbc42;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 5px 0;
+            width: 200px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-container a:hover {
+            background-color: #ff9505;
+        }
+
+        .content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 30vh;
+        }
+
+        /* Tombol yang lebih menarik */
+        .quiz-btn, .answer-btn, .back-to-menu-btn {
+            background-color: #ffbc42;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .quiz-btn:hover, .answer-btn:hover, .back-to-menu-btn:hover {
+            background-color: #ff9505;
+        }
+
+        /* Animasi Burung di Dalam Papan Tulis */
+        .bird-gif {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 150px;
+            animation: moveBird 4s infinite alternate;
+        }
+
+        @keyframes moveBird {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100px); } /* Jarak gerakan burung di dalam papan */
+        }
+
+        /* Grid Video */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 20px;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .video-grid-2 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .video-item {
+            text-align: center;
+        }
+
+        .video-item video {
+            width: 100%;
+            height: 200px;
+            max-width: 250px;
+            border-radius: 3px;
+        }
+
+        .video-item p {
+            color: white;
+            margin-top: 3px;
+            font-weight: bold;
+        }
+
+        /* Animasi confetti */
+        .confetti {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            opacity: 0;
+            animation: confetti-fall 3s ease-in-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                opacity: 1;
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .result-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    text-align: center; /* Center text alignment */
+    background-color: rgba(60, 110, 113, 0.9); /* Blackboard style */
+    border: 5px solid white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.finish-message {
+    margin-bottom: 20px;
+}
+
+.back-to-menu-btn {
+    background-color: #ffbc42;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    width: 200px;
+    margin: 0 auto; /* Ensure the button is centered */
+    transition: background-color 0.3s ease;
+}
+
+.back-to-menu-btn:hover {
+    background-color: #ff9505;
+}
+
+
+        footer {
+            text-align: center;
+            padding: 2px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #3c6e71;
+            border-top: 2px solid white;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 2px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Audio Backsound -->
+    <audio id="backsound" loop>
+        <source src="music/backsound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Halaman Awal -->
+    <div class="intro-page" id="introPage">
+        <div class="intro-blackboard">
+            <div class="intro-header">
+                <img src="picture/tutwuri.png" alt="Logo" style="width: 100px; margin-bottom: 20px;">
+                <h1>Selamat Datang di Website Mak Nari</h1>
+                <p>Website ini dirancang untuk membantu peserta didik dengan disabilitas pendengaran mengenal nama-nama hari melalui bahasa isyarat.</p>
+            </div>
+
+            <div class="intro-content">
+                <p>Temukan berbagai video interaktif yang membantu Anda mengenal nama-nama hari dalam bahasa isyarat dan oral. Mari belajar dengan cara yang menyenangkan!</p>
+                <button class="start-btn" onclick="startWebsite()">Mulai</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container Papan Tulis -->
+    <div class="blackboard" id="mainContent">
+        <div class="header" id="header">
+            <img src="picture/tutwuri.png" alt="Logo" style="width: 100px;">
+            <h1>MAK NARI</h1>
+            <p>Mari Kenali Nama-Nama Hari - Bahasa Isyarat</p>
+        </div>
+
+        <div class="menu-container" id="menu">
+            <a href="#" onclick="showContent('tujuan')">Tujuan Pembelajaran</a>
+            <a href="#" onclick="showContent('materi')">Materi</a>
+            <a href="#" onclick="showContent('quiz')">Quiz</a>
+        </div>
+
+        <!-- Konten Tujuan Pembelajaran -->
+        <div class="content" id="tujuan-content" style="display: none;">
+            <div class="nested-blackboard">
+                <h2>Tujuan Pembelajaran</h2>
+                <p>Peserta didik mampu mengenal nama-nama hari menggunakan bahasa isyarat dan oral.</p>
+                <p><strong>Sasaran Peserta Didik</strong></p>
+                <p>Sasaran dari Program Khusus PKPBI ini adalah untuk peserta didik dengan disabilitas pendengaran yang memiliki tingkat pendengaran 60 - 110 dB.</p>
+            </div>
+            <button class="back-to-menu-btn" onclick="showMenu()">Kembali ke Menu</button>
+        </div>
+
+        <!-- Konten Materi -->
+        <div class="content" id="materi-content" style="display: none;">
+
+            <h2>Materi - Nama-nama Hari dalam Bahasa Isyarat</h2>
+            <div class="video-grid">
+                <div class="video-item">
+                    <video src="video/senin.mp4" controls></video>
+                    <p>Senin</p>
+                </div>
+                <div class="video-item">
+                    <video src="video/selasa.mp4" controls></video>
+                    <p>Selasa</p>
+                </div>
+                <div class="video-item">
+                    <video src="video/rabu.mp4" controls></video>
+                    <p>Rabu</p>
+                </div>
+                <div class="video-item">
+                    <video src="video/kamis.mp4" controls></video>
+                    <p>Kamis</p>
+                </div>
+            </div>
+            <div class="video-grid video-grid-2">
+                <div class="video-item">
+                    <video src="video/jumat.mp4" controls></video>
+                    <p>Jumat</p>
+                </div>
+                <div class="video-item">
+                    <video src="video/sabtu.mp4" controls></video>
+                    <p>Sabtu</p>
+                </div>
+                <div class="video-item">
+                    <video src="video/minggu.mp4" controls></video>
+                    <p>Minggu</p>
+                </div>
+            </div>
+            <button class="back-to-menu-btn" onclick="showMenu()">Kembali ke Menu</button>
+        </div>
+
+        <!-- Konten Quiz -->
+        <div class="content" id="quiz-content" style="display: none;">
+            <div class="nested-blackboard">
+                <h2>Quiz</h2>
+                <p>Silahkan pilih jawaban yang benar dari pertanyaan yang diberikan!</p>
+                <div class="button-container">
+                    <button class="quiz-btn" onclick="startQuiz()">Mulai Quiz</button>
+                    <button class="quiz-btn" onclick="showContent('materi')">Kembali ke Materi</button>
+                </div>
+            </div>
+            <button class="back-to-menu-btn" onclick="showMenu()">Kembali ke Menu</button>
+        </div>
+
+        <!-- Pertanyaan Konten -->
+        <div class="content" id="quizBoard" style="display: none;">
+            <h2 id="question-title">Quiz</h2>
+            <p id="question-text">Silahkan pilih jawaban yang benar dari pertanyaan yang diberikan!</p>
+
+            <!-- Video Placeholder -->
+            <div id="question-video-container">
+                <video id="question-video" width="300" controls>
+                    <!-- Video for the question -->
+                </video>
+            </div>
+
+            <!-- Answer Buttons -->
+            <div class="button-container">
+                <button class="answer-btn" id="answer1" onclick="checkAnswer(1)">Jawaban 1</button>
+                <button class="answer-btn" id="answer2" onclick="checkAnswer(2)">Jawaban 2</button>
+            </div>
+
+            <p class="feedback" id="correct-feedback" style="display: none;">Benar!</p>
+            <p class="feedback" id="incorrect-feedback" style="display: none;">Salah!</p>
+
+            <!-- Confetti Animation -->
+            <div id="confetti-container" class="confetti"></div>
+
+            <!-- Button to return to menu -->
+            <button class="back-to-menu-btn" onclick="showMenu()">Kembali ke Menu</button>
+        </div>
+
+        <!-- Result Container for end message -->
+<div class="blackboard result-container" id="finishContainer" style="display: none;">
+    <p class="finish-message">Selamat! Anda telah menyelesaikan quiz dengan baik!</p>
+    <button class="back-to-menu-btn" onclick="showMenu()">Kembali ke Menu</button>
+</div>
+
+
+        <!-- Animasi Burung di dalam papan tulis -->
+        <img src="picture/bird.gif" alt="GIF Burung" class="bird-gif">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Untuk Peserta Didik Disabilitas Pendengaran</p>
+        <p>&copy; 2024 Indriyati Siti Salamah, M.Pd.</p>
+    </footer>
+
+    <script>
+        let currentQuestion = 0;
+        const questions = [
+            {
+                video: 'video/senin.mp4',
+                correctAnswer: 1,
+                answers: ["Senin", "Selasa"]
+            },
+            {
+                video: 'video/selasa.mp4',
+                correctAnswer: 2,
+                answers: ["Senin", "Selasa"]
+            },
+            {
+                video: 'video/rabu.mp4',
+                correctAnswer: 1,
+                answers: ["Rabu", "Kamis"]
+            }
+        ];
+
+        function startWebsite() {
+            document.getElementById('introPage').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            // Get random question
+            const question = questions[Math.floor(Math.random() * questions.length)];
+            document.getElementById('question-video').src = question.video;
+            document.getElementById('answer1').textContent = question.answers[0];
+            document.getElementById('answer2').textContent = question.answers[1];
+
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('quizBoard').style.display = 'block';
+            document.getElementById('finishContainer').style.display = 'none';
+            document.getElementById('correct-feedback').style.display = 'none'; // Hide feedback initially
+            document.getElementById('incorrect-feedback').style.display = 'none'; // Hide feedback initially
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const question = questions[currentQuestion];
+            if (selectedAnswer === question.correctAnswer) {
+                showCorrectFeedback();
+                setTimeout(() => {
+                    currentQuestion++;
+                    if (currentQuestion < 3) {
+                        showQuestion();
+                    } else {
+                        showFinish();
+                    }
+                }, 2000);
+            } else {
+                showIncorrectFeedback();
+            }
+        }
+
+        function showCorrectFeedback() {
+            document.getElementById('correct-feedback').style.display = 'block';
+            document.getElementById('incorrect-feedback').style.display = 'none';
+            playConfetti();
+        }
+
+        function showIncorrectFeedback() {
+            document.getElementById('incorrect-feedback').style.display = 'block';
+            document.getElementById('correct-feedback').style.display = 'none';
+        }
+
+        function playConfetti() {
+            const confettiContainer = document.getElementById('confetti-container');
+            confettiContainer.style.display = 'block';
+            setTimeout(() => {
+                confettiContainer.style.display = 'none';
+            }, 3000);
+        }
+
+        function showFinish() {
+            document.getElementById('quizBoard').style.display = 'none';
+            document.getElementById('finishContainer').style.display = 'block';
+        }
+
+        function showContent(contentId) {
+            document.getElementById('menu').style.display = 'none';
+            document.getElementById('tujuan-content').style.display = 'none';
+            document.getElementById('materi-content').style.display = 'none';
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('quizBoard').style.display = 'none';
+            document.getElementById('finishContainer').style.display = 'none';
+
+            document.getElementById(contentId + '-content').style.display = 'block';
+        }
+
+        function showMenu() {
+            document.getElementById('menu').style.display = 'flex';
+            document.getElementById('tujuan-content').style.display = 'none';
+            document.getElementById('materi-content').style.display = 'none';
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('quizBoard').style.display = 'none';
+            document.getElementById('finishContainer').style.display = 'none';
+        }
+
+        function startWebsite() {
+            document.getElementById('introPage').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            // Memutar audio setelah interaksi pengguna
+            document.getElementById('backsound').play();
+        }
+
+    </script>
+
+</body>
+</html>
