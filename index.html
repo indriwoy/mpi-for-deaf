@@ -436,109 +436,112 @@
     </footer>
 
     <script>
-        let currentQuestion = 0;
-        const questions = [
-            {
-                video: 'video/Senin.mp4',
-                correctAnswer: 1,
-                answers: ["Senin", "Selasa"]
-            },
-            {
-                video: 'video/Selasa.mp4',
-                correctAnswer: 2,
-                answers: ["Senin", "Selasa"]
-            },
-            {
-                video: 'video/Rabu.mp4',
-                correctAnswer: 1,
-                answers: ["Rabu", "Kamis"]
-            }
-        ];
+let currentQuestion = 0;
+const questions = [
+    {
+        video: 'video/senin.mp4',
+        correctAnswer: 1,
+        answers: ["Senin", "Selasa"]
+    },
+    {
+        video: 'video/selasa.mp4',
+        correctAnswer: 2,
+        answers: ["Senin", "Selasa"]
+    },
+    {
+        video: 'video/rabu.mp4',
+        correctAnswer: 1,
+        answers: ["Rabu", "Kamis"]
+    }
+];
 
-        function startWebsite() {
-            document.getElementById('introPage').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-        }
+function startWebsite() {
+    document.getElementById('introPage').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    // Memutar audio setelah interaksi pengguna
+    document.getElementById('backsound').play();
+}
 
-        function startQuiz() {
-            currentQuestion = 0;
-            showQuestion();
-        }
+function startQuiz() {
+    currentQuestion = 0;
+    showQuestion();  // Mulai kuis dengan pertanyaan pertama
+}
 
-        function showQuestion() {
-            // Get random question
-            const question = questions[Math.floor(Math.random() * questions.length)];
-            document.getElementById('question-video').src = question.video;
-            document.getElementById('answer1').textContent = question.answers[0];
-            document.getElementById('answer2').textContent = question.answers[1];
+function showQuestion() {
+    // Ambil pertanyaan berdasarkan urutan (tidak menggunakan random)
+    const question = questions[currentQuestion];
+    document.getElementById('question-video').src = question.video;
+    document.getElementById('answer1').textContent = question.answers[0];
+    document.getElementById('answer2').textContent = question.answers[1];
 
-            document.getElementById('quiz-content').style.display = 'none';
-            document.getElementById('quizBoard').style.display = 'block';
-            document.getElementById('finishContainer').style.display = 'none';
-            document.getElementById('correct-feedback').style.display = 'none'; // Hide feedback initially
-            document.getElementById('incorrect-feedback').style.display = 'none'; // Hide feedback initially
-        }
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('quizBoard').style.display = 'block';
+    document.getElementById('finishContainer').style.display = 'none';
+    document.getElementById('correct-feedback').style.display = 'none'; // Sembunyikan feedback awalnya
+    document.getElementById('incorrect-feedback').style.display = 'none'; // Sembunyikan feedback awalnya
+}
 
-        function checkAnswer(selectedAnswer) {
-            const question = questions[currentQuestion];
-            if (selectedAnswer === question.correctAnswer) {
-                showCorrectFeedback();
-                setTimeout(() => {
-                    currentQuestion++;
-                    if (currentQuestion < 3) {
-                        showQuestion();
-                    } else {
-                        showFinish();
-                    }
-                }, 2000);
+function checkAnswer(selectedAnswer) {
+    const question = questions[currentQuestion];
+    if (selectedAnswer === question.correctAnswer) {
+        showCorrectFeedback();
+        setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();  // Tampilkan pertanyaan berikutnya
             } else {
-                showIncorrectFeedback();
+                showFinish();  // Kuis selesai
             }
-        }
+        }, 2000);
+    } else {
+        showIncorrectFeedback();
+    }
+}
 
-        function showCorrectFeedback() {
-            document.getElementById('correct-feedback').style.display = 'block';
-            document.getElementById('incorrect-feedback').style.display = 'none';
-            playConfetti();
-        }
+function showCorrectFeedback() {
+    document.getElementById('correct-feedback').style.display = 'block';
+    document.getElementById('incorrect-feedback').style.display = 'none';
+    playConfetti();
+}
 
-        function showIncorrectFeedback() {
-            document.getElementById('incorrect-feedback').style.display = 'block';
-            document.getElementById('correct-feedback').style.display = 'none';
-        }
+function showIncorrectFeedback() {
+    document.getElementById('incorrect-feedback').style.display = 'block';
+    document.getElementById('correct-feedback').style.display = 'none';
+}
 
-        function playConfetti() {
-            const confettiContainer = document.getElementById('confetti-container');
-            confettiContainer.style.display = 'block';
-            setTimeout(() => {
-                confettiContainer.style.display = 'none';
-            }, 3000);
-        }
+function playConfetti() {
+    const confettiContainer = document.getElementById('confetti-container');
+    confettiContainer.style.display = 'block';
+    setTimeout(() => {
+        confettiContainer.style.display = 'none';
+    }, 3000);
+}
 
-        function showFinish() {
-            document.getElementById('quizBoard').style.display = 'none';
-            document.getElementById('finishContainer').style.display = 'block';
-        }
+function showFinish() {
+    document.getElementById('quizBoard').style.display = 'none';
+    document.getElementById('finishContainer').style.display = 'block';
+}
 
-        function showContent(contentId) {
-            document.getElementById('menu').style.display = 'none';
-            document.getElementById('tujuan-content').style.display = 'none';
-            document.getElementById('materi-content').style.display = 'none';
-            document.getElementById('quiz-content').style.display = 'none';
-            document.getElementById('quizBoard').style.display = 'none';
-            document.getElementById('finishContainer').style.display = 'none';
+function showContent(contentId) {
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('tujuan-content').style.display = 'none';
+    document.getElementById('materi-content').style.display = 'none';
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('quizBoard').style.display = 'none';
+    document.getElementById('finishContainer').style.display = 'none';
 
-            document.getElementById(contentId + '-content').style.display = 'block';
-        }
+    document.getElementById(contentId + '-content').style.display = 'block';
+}
 
-        function showMenu() {
-            document.getElementById('menu').style.display = 'flex';
-            document.getElementById('tujuan-content').style.display = 'none';
-            document.getElementById('materi-content').style.display = 'none';
-            document.getElementById('quiz-content').style.display = 'none';
-            document.getElementById('quizBoard').style.display = 'none';
-            document.getElementById('finishContainer').style.display = 'none';
-        }
+function showMenu() {
+    document.getElementById('menu').style.display = 'flex';
+    document.getElementById('tujuan-content').style.display = 'none';
+    document.getElementById('materi-content').style.display = 'none';
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('quizBoard').style.display = 'none';
+    document.getElementById('finishContainer').style.display = 'none';
+}
+
 
         function startWebsite() {
             document.getElementById('introPage').style.display = 'none';
