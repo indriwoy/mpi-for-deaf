@@ -333,7 +333,7 @@
 </head>
 <body>
     <div id="videoContainer">
-    <video id="introVideo" width="100%" autoplay playsinline>
+    <video id="introVideo" width="100%" autoplay muted playsinline>
         <source src="video/bumper.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -613,7 +613,12 @@ function showMenu() {
     document.getElementById('videoContainer').style.display = 'none';
     document.getElementById('introPage').style.display = 'block';
 });
-
+// Event listener untuk memulai video dengan suara setelah klik pertama pengguna
+document.addEventListener('click', function() {
+    var introVideo = document.getElementById('introVideo');
+    introVideo.muted = false; // Hapus mute pada klik pertama
+    introVideo.play(); // Putar ulang video jika telah berhenti
+}, { once: true }); // Hanya jalankan sekali
 
 
     </script>
